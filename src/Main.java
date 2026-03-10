@@ -1,7 +1,6 @@
 import workshop.Task;
 import workshop.Workshop;
 
-
 private ArrayList<Task> generateTaskList() {
     Task t1 = new Task(150, 300, 2.5);
     Task t2 = new Task(140, 400, 1.5);
