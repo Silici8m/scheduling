@@ -7,7 +7,13 @@ import java.util.List;
 
 import static java.lang.Math.max;
 
+
 public class Workshop {
+
+    public static final String ANSI_RESET = "\u001B[0m";
+    public static final String ANSI_RED = "\u001B[31m";
+    public static final String ANSI_GREEN = "\u001B[32m";
+
     private static int counter = 0;
 
     private final int id;
@@ -39,6 +45,14 @@ public class Workshop {
         }
         this.totalCompletionTime = newTotalCompletionTime;
         this.totalPenaltyCost = newTotalPenaltyCost;
+    }
+
+    public int getTotalCompletionTime() {
+        return totalCompletionTime;
+    }
+
+    public double getTotalPenaltyCost() {
+        return totalPenaltyCost;
     }
 
     private Machine getMachine(int posMachine) {
@@ -82,10 +96,21 @@ public class Workshop {
         scheduleTasks(tasks);
     }
 
-    private String machinesToString() {
+    public void display(boolean verbose) {
+        String s = "Workshop " + id + " :\n" +
+                "\tCompletion Time\t\t" + ANSI_GREEN +totalCompletionTime + ANSI_RESET + "\n" +
+                "\tPenalty Cost\t\t" + ANSI_RED + totalPenaltyCost + ANSI_RESET + "\n" +
+                "\tNombre de machines\t" + machines.size() + "\n";
+        if (verbose) {
+            s += ("\tMachines\t[\n" + machinesToString(8) + "\t]\n");
+        }
+        System.out.println(s);
+    }
+
+    private String machinesToString(int nbSpaces) {
         String s = "";
         for (Machine m : machines) {
-            s = s.concat("  " + m + "\n");
+            s = s.concat(" ".repeat(nbSpaces) + m + "\n");
         }
         return s;
     }
@@ -97,7 +122,7 @@ public class Workshop {
                 ", nbMachines=" + machines.size() +
                 ", totalPenaltyCost=" + totalPenaltyCost +
                 ", totalCompletionTime=" + totalCompletionTime +
-                ", machines=[\n" + machinesToString() + "]" +
+                ", machines=[\n" + machinesToString(2) + "]" +
                 '}';
     }
 }

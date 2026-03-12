@@ -1,8 +1,10 @@
 package workshop;
 
+import java.util.Objects;
+
 import static java.lang.Math.max;
 
-public class Task {
+public class Task implements Comparable{
     private static final int PROCESSING_TIME_MIN = 50;
     private static final int DEADLINE_INF = Integer.MAX_VALUE;
     private final int STARTING_TIME_UNDEFINED = -1;
@@ -43,7 +45,11 @@ public class Task {
     }
 
     public Task(Task t) {
-        this(t.processingTime, t.deadline, t.unitPenaltyCost);
+        this.id = t.id;
+        this.startingTime = t.startingTime;
+        this.deadline = t.deadline;
+        this.unitPenaltyCost = t.unitPenaltyCost;
+        this.processingTime = t.processingTime;
     }
 
 
@@ -73,6 +79,18 @@ public class Task {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Task task = (Task) o;
+        return id == task.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
+    @Override
     public String toString() {
         return "Task{" +
                 "id=" + id +
@@ -81,5 +99,31 @@ public class Task {
                 ", deadline=" + deadline +
                 ", unitPenaltyCost=" + unitPenaltyCost +
                 '}';
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        if (o == null || getClass() != o.getClass()) { return -1; }
+        Task t = (Task) o;
+        if (equals(t)) { return 0; }
+        if (processingTime > t.processingTime) {
+            return 1;
+        } else if (processingTime < t.processingTime) {
+            return -1;
+        } else {
+            if (deadline > t.deadline) {
+                return 1;
+            } else if (deadline < t.deadline) {
+                return -1;
+            } else {
+                if (unitPenaltyCost > t.unitPenaltyCost) {
+                    return 1;
+                } else if (unitPenaltyCost < t.unitPenaltyCost) {
+                    return -1;
+                } else {
+                    return id - t.id;
+                }
+            }
+        }
     }
 }
