@@ -1,3 +1,4 @@
+import scheduling.Scheduling;
 import workshop.Task;
 import workshop.Workshop;
 
@@ -34,4 +35,17 @@ void main() {
 
     w3.scheduleTasksProcessingTimeOpt(generateTaskList());
     System.out.println("w3: " + w3);
+
+    w1.display(false);
+
+    List<Task> tasks = new ArrayList<>();
+    tasks.add(new Task(100));
+    tasks.add(new Task(150));
+    List<Task> copyTasks = Scheduling.copyTasks(tasks);
+    copyTasks.add(new Task(400));
+    System.out.println("Initial number of tasks: " + tasks.size());
+    // Has to be 2
+    System.out.println("Final number of tasks: " + copyTasks.size());
+    // Has to be 3
+
 }
