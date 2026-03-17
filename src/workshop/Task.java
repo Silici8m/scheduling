@@ -4,7 +4,7 @@ import java.util.Objects;
 
 import static java.lang.Math.max;
 
-public class Task implements Comparable{
+public class Task implements Comparable<Task> {
     private static final int PROCESSING_TIME_MIN = 50;
     private static final int DEADLINE_INF = Integer.MAX_VALUE;
     private final int STARTING_TIME_UNDEFINED = -1;
@@ -101,10 +101,8 @@ public class Task implements Comparable{
                 '}';
     }
 
-    @Override
-    public int compareTo(Object o) {
-        if (o == null || getClass() != o.getClass()) { return -1; }
-        Task t = (Task) o;
+    public int compareTo(Task t) {
+        if (t == null || getClass() != t.getClass()) { return -1; }
         if (equals(t)) { return 0; }
         if (processingTime > t.processingTime) {
             return 1;
